@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+    <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nerfies: Deformable Neural Radiance Fields</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/favicon.svg">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+</nav>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-1 publication-title">3D Scene Editing and stylization by NeRF and Style
+                        Transfer</h1>
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block"> Tianhua Tao,</span>
+                        <span class="author-block"> Mingtong Zhang,</span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block">UIUC</span>
+                    </div>
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+
+                            <!-- Code Link. -->
+                            <span class="link-block">
+                <a href="https://github.com/pixel-alex/Stylize-Anything"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <video id="teaser" autoplay muted loop playsinline height="100%">
+                <source src="./static/videos/teaser.mp4"
+                        type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">
+                [Left] NeRF Reconstruction &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Middle] Stylized NeRF &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                [Right] Object-level Stylization <span>(Ours)</span>
+            </h2>
+        </div>
+    </div>
+</section>
+
+
+<section class="hero is-light is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/0.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/lego.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/lego_0.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/73.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/Family.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/Family_73.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/14.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/fern.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/fern_14.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/33.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/leaves.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/leaves_33.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/128.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/horns.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/horns_128.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/15.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/room.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/room_15.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/131.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/Truck.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/Truck_131.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="image-wrapper">
+                        <img src="./static/images/1.jpg" class="style-image"/>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/Playground.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-wrapper">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="./static/videos/Playground_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        The abstract
+                    </p>
+                    <p>
+                        Should be here
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <!-- Paper video. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Pipeline</h2>
+
+            </div>
+        </div>
+        <!--/ Paper video. -->
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered">
+
+
+            <div class="column">
+                <div class="content">
+                    <h2 class="title is-3">Segment Anything</h2>
+                    <p>
+                        With the help of <a href="https://segment-anything.com/">Segment Anything Model </a>, we can
+                        easily extract objects from NeRF generation.
+                    </p>
+                    <img src="./static/images/trex_mask.jpg" alt="Trex Mask" class="interpolation-image">
+                </div>
+            </div>
+
+
+            <!-- Track Anything. -->
+            <div class="column">
+                <h2 class="title is-3">Track Anything</h2>
+                <div class="columns is-centered">
+                    <div class="column content">
+                        <p>
+                            Build upon <a href="https://segment-anything.com/">Segment Anything Model </a>, the <a
+                                href="https://github.com/gaomingqi/Track-Anything">Track Anything </a> enables object
+                            stylization in videos for NeRF.
+                        </p>
+                        <video id="track-video" controls autoplay playsinline height="100%">
+                            <source src="./static/videos/lego_mask.mp4"
+                                    type="video/mp4">
+                        </video>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--/ Matting. -->
+
+        <!-- Animation. -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3">Demo</h2>
+
+                <!-- Interpolating. -->
+                <h3 class="title is-4">No Style | Global Style | Object Style</h3>
+                <div class="content has-text-justified">
+                    <p>
+                        We can also animate the scene by interpolating the deformation latent codes of two input
+                        frames. Use the slider here to linearly interpolate between the left frame and the right
+                        frame.
+                    </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/24.jpg"
+                             class="interpolation-image"
+                             alt="Interpolate start reference image."/>
+                        <p>Style Image</p>
+                    </div>
+                    <video poster="" autoplay controls muted loop playsinline height="100%" width="72%">
+                        <source src="./static/videos/orchids_24_merged.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/131.jpg"
+                             class="interpolation-image"
+                             alt="Interpolate start reference image."/>
+                        <p>Style Image</p>
+                    </div>
+                    <video poster="" autoplay controls muted loop playsinline height="100%" width="72%">
+                        <source src="./static/videos/fern_131_merged.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/86.jpg"
+                             class="interpolation-image"
+                             alt="Interpolate start reference image."/>
+                        <p>Style Image</p>
+                    </div>
+                    <video poster="" autoplay controls muted loop playsinline height="100%" width="72%">
+                        <source src="./static/videos/room_86_merged.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/3.jpg"
+                             class="interpolation-image"
+                             alt="Interpolate start reference image."/>
+                        <p>Style Image</p>
+                    </div>
+                    <video poster="" autoplay controls muted loop playsinline height="100%" width="72%">
+                        <source src="./static/videos/Playground_3_merged.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                 <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/14.jpg"
+                             class="interpolation-image"
+                             alt="Interpolate start reference image."/>
+                        <p>Style Image</p>
+                    </div>
+                    <video poster="" autoplay controls muted loop playsinline height="100%" width="72%">
+                        <source src="./static/videos/M60_14_merged.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <br/>
+                <!--/ Interpolating. -->
+
+                <!-- Re-rendering. -->
+                <h3 class="title is-4">Applying More than One Style</h3>
+
+                <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/3.jpg"
+                             class="interpolation-image"
+                        />
+                        <p class="is-bold">First Style (for fortress)</p>
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/1.jpg"
+                             class="interpolation-image"
+                        />
+                        <p class="is-bold">Second Style (for table)</p>
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/p1.jpg"
+                             class="interpolation-image"
+                        />
+                        <p class="is-bold">Mask for First Style</p>
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                        <img src="./static/images/p2.jpg"
+                             class="interpolation-image"
+                        />
+                        <p class="is-bold">Mask for Second Style</p>
+                    </div>
+                </div>
+
+                <div class="content has-text-justified">
+                    <p>
+                        With the same pipeline, we can apply several styles to different objects in the same scene.
+                    </p>
+                </div>
+                <div class="content has-text-centered">
+                    <!--          <video id="replay-video"-->
+                    <!--                 controls-->
+                    <!--                 muted-->
+                    <!--                 preload-->
+                    <!--                 playsinline-->
+                    <!--                 width="75%">-->
+                    <!--            <source src="./static/videos/replay.mp4"-->
+                    <!--                    type="video/mp4">-->
+                    <!--          </video>-->
+                    <video autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/fortress_merged.mp4"
+                                type="video/mp4">
+                    </video>
+                    <p class="subtitle has-text-centered">
+                        From left to right: &nbsp;&nbsp;&nbsp; No Style; &nbsp;&nbsp;&nbsp; Style 1 ; &nbsp;&nbsp;&nbsp;
+                        Style 2 ; &nbsp;&nbsp;&nbsp; Style 1 + 2
+                    </p>
+                </div>
+                <!--/ Re-rendering. -->
+
+            </div>
+        </div>
+        <!--/ Animation. -->
+
+
+        <!-- Concurrent Work. -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3">Related Links</h2>
+
+                <div class="content has-text-justified">
+                    <p>
+                        More Info.
+                    </p>
+                    <p>
+                        Add Here
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/ Concurrent Work. -->
+
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content" >
+                    <p>
+                        Website template from <a
+                            href="https://github.com/nerfies/nerfies.github.io">nerfies</a>. This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
