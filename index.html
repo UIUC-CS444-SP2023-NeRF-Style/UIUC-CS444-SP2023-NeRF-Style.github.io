@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="description"
-          content="3D Scene Editing and stylization by NeRF and Style Transfer.">
+          content="3D Scene stylization by NeRF and Style Transfer.">
     <meta name="keywords" content="NeRF">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>3D Scene Editing and stylization by NeRF and Style Transfer</title>
+    <title>3D Scene stylization by NeRF and Style Transfer</title>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -59,8 +59,7 @@
         <div class="container is-max-desktop">
             <div class="columns is-centered">
                 <div class="column has-text-centered">
-                    <h1 class="title is-1 publication-title">3D Scene Editing and stylization by NeRF and Style
-                        Transfer</h1>
+                    <h1 class="title is-1 publication-title">3D Scene stylization by NeRF and Style Transfer</h1>
                     <div class="is-size-5 publication-authors">
                         <span class="author-block"> Tianhua Tao,</span>
                         <span class="author-block"> Mingtong Zhang,</span>
@@ -161,7 +160,7 @@
 
                 <div class="item">
                     <div class="image-wrapper">
-                        <img src="./static/images/33.jpg" class="style-image"/>
+                        <img src="./static/images/47.jpg" class="style-image"/>
                     </div>
                     <div class="video-wrapper">
                         <video poster="" autoplay controls muted loop playsinline height="100%">
@@ -170,7 +169,7 @@
                     </div>
                     <div class="video-wrapper">
                         <video poster="" autoplay controls muted loop playsinline height="100%">
-                            <source src="./static/videos/leaves_33.mp4" type="video/mp4">
+                            <source src="./static/videos/leaves_47.mp4" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -251,10 +250,14 @@
                 <h2 class="title is-3">Abstract</h2>
                 <div class="content has-text-justified">
                     <p>
-                        The abstract
-                    </p>
-                    <p>
-                        Should be here
+                        Neural Radiance Fields (NeRF) offer a promising approach for scene representation in 3D
+                        reconstruction and photorealistic rendering from novel viewpoints. Recent advancements in
+                        NeRF-based stylization have shown impressive results in transferring styles to textures, colors,
+                        and more within 3D scenes. However, these previous works lack a focus on specific components
+                        within the scenes, resulting in limited control. To address this limitation, we propose an
+                        approach that combines Track-Anything and existing models to construct a comprehensive
+                        framework. This framework enables the transfer of arbitrary styles onto target objects while
+                        maintaining consistency in both geometry and appearance across other components of the scene.
                     </p>
 
                 </div>
@@ -266,7 +269,7 @@
         <div class="columns is-centered has-text-centered">
             <div class="column is-four-fifths">
                 <h2 class="title is-3">Pipeline</h2>
-
+                <img src="./static/images/teaser.jpg" alt="pipeline">
             </div>
         </div>
         <!--/ Paper video. -->
@@ -322,9 +325,7 @@
                 <h3 class="title is-4">No Style | Global Style | Object Style</h3>
                 <div class="content has-text-justified">
                     <p>
-                        We can also animate the scene by interpolating the deformation latent codes of two input
-                        frames. Use the slider here to linearly interpolate between the left frame and the right
-                        frame.
+                        We generate object level stylization upon global stylization and segmentation.
                     </p>
                 </div>
                 <div class="columns is-vcentered interpolation-panel">
@@ -375,7 +376,7 @@
                     </video>
                 </div>
 
-                 <div class="columns is-vcentered interpolation-panel">
+                <div class="columns is-vcentered interpolation-panel">
                     <div class="column is-3 has-text-centered">
                         <img src="./static/images/14.jpg"
                              class="interpolation-image"
@@ -457,10 +458,12 @@
 
                 <div class="content has-text-justified">
                     <p>
-                        More Info.
+                        Our model is built upon <a href="https://github.com/Kai-46/ARF-svox2">ARF: Artistic Radiance
+                        Fields</a>.
                     </p>
                     <p>
-                        Add Here
+                        See also: <a href="https://segment-anything.com/">Segment Anything Model</a>, <a
+                            href="https://github.com/gaomingqi/Track-Anything">Track Anything Model</a>.
                     </p>
                 </div>
             </div>
@@ -475,10 +478,11 @@
     <div class="container">
         <div class="columns is-centered">
             <div class="column is-8">
-                <div class="content" >
+                <div class="content">
                     <p>
                         Website template from <a
-                            href="https://github.com/nerfies/nerfies.github.io">nerfies</a>. This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+                            href="https://github.com/nerfies/nerfies.github.io">nerfies</a>. This work is licensed under
+                        a Creative Commons Attribution-ShareAlike 4.0 International License.
                     </p>
                 </div>
             </div>
